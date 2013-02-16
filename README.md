@@ -1,6 +1,6 @@
 # OmniAuth BrowserID
 
-Mozilla's [BrowserID](https://login.persona.org/) is a great implementation of verified email that lets you quickly and easily login to websites. This is an OmniAuth strategy that allows you to use BrowserID in your application!
+Mozilla [Persona](https://login.persona.org/), formerly known as BrowserID, is a great implementation of verified email that lets you quickly and easily login to websites. This is an OmniAuth strategy that allows you to use Persona in your application!
 
 ## Installation
 
@@ -8,11 +8,11 @@ Mozilla's [BrowserID](https://login.persona.org/) is a great implementation of v
 
 ## Usage
 
-BrowserID works using a Javascript-driven popup window. As such, there is a little more work than usual to integrate BrowserID seamlessly into your app. That being said, a default implementation of BrowserID will work as outlined below.
+Persona works using a Javascript-driven popup window. As such, there is a little more work than usual to integrate it seamlessly into your app. That being said, a default implementation of Persona will work as outlined below.
 
 ### Basic Case
 
-To use the built-in form in order to authenticate with BrowserID, you simply need to add the strategy to your application:
+To use the built-in form in order to authenticate with Persona, you simply need to add the strategy to your application:
 
 ```ruby
 use OmniAuth::Builder do
@@ -24,14 +24,14 @@ Now all you need to do is redirect your users to `/auth/browser_id` and you're a
 
 ### Better Integration
 
-To better integrate BrowserID with your application, you will want to use the BrowserID javascript directly in your app. Assuming you included the middleware as described above, here is a way you could structure your HTML:
+To better integrate Persona with your application, you will want to use the Persona javascript directly in your app. Assuming you included the middleware as described above, here is a way you could structure your HTML:
 
 ```html
 <html>
   <body>
     <form id='browser_id_form' action='/auth/browser_id/callback'>
       <input type='hidden' name='assertion'/>
-      <button type='submit'>Login with BrowserID</button>
+      <button type='submit'>Login with Persona</button>
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -59,7 +59,7 @@ To better integrate BrowserID with your application, you will want to use the Br
 </html>
 ```
 
-What this does is sets up a form with a "Login with BrowserID" button. When the button of the form is clicked, it is intercepted by jQuery and the BrowserID flow is started. BrowserID returns an `assertion` that is then used to verify an email. In this example, the form points to `/auth/browser_id/callback` which will automatically perform verification as well as return a standard OmniAuth hash.
+What this does is sets up a form with a "Login with Persona" button. When the button of the form is clicked, it is intercepted by jQuery and the Persona flow is started. Persona returns an `assertion` that is then used to verify an email. In this example, the form points to `/auth/browser_id/callback` which will automatically perform verification as well as return a standard OmniAuth hash.
 
 ## Options
 
