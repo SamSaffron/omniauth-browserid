@@ -26,33 +26,35 @@ module OmniAuth
 
       def request_phase
         OmniAuth::Form.build(
-          :title => "BrowserID Login",
+          :title => "Persona Login",
           :url => callback_path,
           :header_info => <<-HTML
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
             <script src="https://login.persona.org/include.js" type="text/javascript"></script>
             <script type='text/javascript'>
-              function loginViaEmail() {
-                navigator.id.get(function(assertion) {
+              navigator.id.watch({
+                onlogin: function(assertion) {
                   if (assertion) {
                     $('input[name=assertion]').val(assertion);
                     $('form').submit();
                   } else {
                     window.location = "#{failure_path}"
                   }
-                });  
-              }
+                },
+                onlogout: function() {
+                }
+              });
 
               $(function() {
                 $('button').click(function() {
-                  loginViaEmail();
+                  navigator.id.request();
                   return false;
                 });
               });
             </script>
           HTML
         ) do |f|
-          f.html "<input type='hidden' name='assertion'/><p>Click 'Connect' to sign in with BrowserID.</p>"
+          f.html "<input type='hidden' name='assertion'/><p>Click 'Connect' to sign in with Persona.</p>"
         end.to_response
       end
 
