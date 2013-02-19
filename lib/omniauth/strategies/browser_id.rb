@@ -33,16 +33,23 @@ module OmniAuth
             <script src="https://login.persona.org/include.js" type="text/javascript"></script>
             <script type='text/javascript'>
               (function() {
+                var onreadyCalled = false;
+
                 navigator.id.watch({
                   onlogin: function(assertion) {
-                    if (assertion) {
-                      $('input[name=assertion]').val(assertion);
-                      $('form').submit();
-                    } else {
-                      window.location = "#{failure_path}"
+                    if (onreadyCalled) {
+                      if (assertion) {
+                        $('input[name=assertion]').val(assertion);
+                        $('form').submit();
+                      } else {
+                        window.location = "#{failure_path}"
+                      }
                     }
                   },
                   onlogout: function() {
+                  },
+                  onready: function() {
+                    onreadyCalled = true;
                   }
                 });
 
