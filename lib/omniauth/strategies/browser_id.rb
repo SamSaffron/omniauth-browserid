@@ -32,25 +32,27 @@ module OmniAuth
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
             <script src="https://login.persona.org/include.js" type="text/javascript"></script>
             <script type='text/javascript'>
-              navigator.id.watch({
-                onlogin: function(assertion) {
-                  if (assertion) {
-                    $('input[name=assertion]').val(assertion);
-                    $('form').submit();
-                  } else {
-                    window.location = "#{failure_path}"
+              (function() {
+                navigator.id.watch({
+                  onlogin: function(assertion) {
+                    if (assertion) {
+                      $('input[name=assertion]').val(assertion);
+                      $('form').submit();
+                    } else {
+                      window.location = "#{failure_path}"
+                    }
+                  },
+                  onlogout: function() {
                   }
-                },
-                onlogout: function() {
-                }
-              });
-
-              $(function() {
-                $('button').click(function() {
-                  navigator.id.request();
-                  return false;
                 });
-              });
+
+                $(function() {
+                  $('button').click(function() {
+                    navigator.id.request();
+                    return false;
+                  });
+                });
+              }())
             </script>
           HTML
         ) do |f|
